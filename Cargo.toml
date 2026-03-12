@@ -1,0 +1,36 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/seqpacker",
+    "bindings/python",
+    "benchmarks/rust",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT"
+authors = ["AlphaKhaw <alphakhaw@gmail.com>"]
+repository = "https://github.com/AlphaKhaw/seqpacker"
+documentation = "https://docs.rs/seqpacker"
+readme = "README.md"
+keywords = ["bin-packing", "llm", "machine-learning", "optimization", "deep-learning"]
+categories = ["algorithms", "science", "concurrency"]
+
+[workspace.dependencies]
+proptest = "1.10"
+rand = "0.8"
+rand_distr = "0.4"
+rayon = "1.11"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+smallvec = "1.13"
+thiserror = "2.0"
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+opt-level = 3
+panic = "abort"
+strip = true
