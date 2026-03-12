@@ -46,9 +46,9 @@ let packer = Packer::new(1024)
 
 let result = packer.pack_lengths(&[1000, 800, 600, 500, 400, 300, 200, 100]).unwrap();
 
-for pack in &result.packs {
-    let ids: Vec<usize> = pack.items.iter().map(|s| s.id).collect();
-    println!("Pack {}: items {:?}, used {}/{}", pack.id, ids, pack.used, pack.capacity);
+for (i, pack) in result.packs.iter().enumerate() {
+    let ids: Vec<usize> = pack.sequences.iter().map(|s| s.id).collect();
+    println!("Pack {}: items {:?}, used {}/{}", i, ids, pack.used_capacity(), pack.capacity);
 }
 ```
 
@@ -57,26 +57,21 @@ for pack in &result.packs {
 For online / bounded-space packing, use `StreamPacker` with `NextFit` or `Harmonic`:
 
 ```rust
-use seqpacker::{StreamPacker, StreamStrategy, Sequence};
+use seqpacker::{StreamPacker, StreamStrategy};
 
 let mut stream = StreamPacker::new(2048, StreamStrategy::NextFit);
 
-let sequences = vec![
-    Sequence::new(0, 500),
-    Sequence::new(1, 600),
-    Sequence::new(2, 1500),
-    Sequence::new(3, 400),
-];
+let lengths = [500, 600, 1500, 400];
 
-for seq in sequences {
-    for completed_pack in stream.add(seq).unwrap() {
-        println!("Completed: {} items, {}/{} used", completed_pack.items.len(), completed_pack.used, completed_pack.capacity);
+for &len in &lengths {
+    for completed_pack in stream.add(len).unwrap() {
+        println!("Completed: {} items, {}/{} used", completed_pack.len(), completed_pack.used_capacity(), completed_pack.capacity);
     }
 }
 
 // Flush remaining
 for pack in stream.finish() {
-    println!("Remaining: {} items", pack.items.len());
+    println!("Remaining: {} items", pack.len());
 }
 ```
 
@@ -95,7 +90,7 @@ for pack in stream.finish() {
 | FirstFitShuffle | `FirstFitShuffle` | O(n log n) | ~1.3 | Training randomness |
 | ModifiedFFD | `ModifiedFirstFitDecreasing` | O(n log n) | 1.18 | Mixed-size distributions |
 | **OptimizedBFD** | **`OptimizedBestFitDecreasing`** | **O(n log n)** | **1.22** | **Default (recommended)** |
-| ParallelOBFD | `OptimizedBestFitDecreasingParallel` | O(n log n) | 1.22 | Large datasets (multi-threaded) |
+| ParallelOBFD | `ParallelOptimizedBestFitDecreasing` | O(n log n) | 1.22 | Large datasets (multi-threaded) |
 | Harmonic-K | `Harmonic` | O(n) | ~1.69 | Bounded-space online |
 
 Select an algorithm via `PackStrategy`:

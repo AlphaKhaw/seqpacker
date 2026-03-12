@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-03-12
+
+### Fixed
+
+- Crate README code examples: corrected `Pack` field access (`sequences` not `items`), `used_capacity()` method, and `StreamPacker::add()` signature
+- Crate README algorithms table: corrected `ParallelOptimizedBestFitDecreasing` enum variant name
+
+### Changed
+
+- GitHub release workflow now sources release notes from CHANGELOG.md
+
+## [0.1.1] - 2026-03-12
+
+### Fixed
+
+- sdist `license-files` configuration for proper source distribution packaging
+
+### Added
+
+- README for the `seqpacker` crate on crates.io with quick start, streaming, and algorithm reference
+
 ## [0.1.0] - 2026-03-07
 
 ### Added
