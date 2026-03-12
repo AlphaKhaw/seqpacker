@@ -87,8 +87,8 @@ seqpacker/
 │   │       ├── best_fit_decreasing.rs    # BFD  — sort desc + BF
 │   │       ├── first_fit_shuffle.rs      # FFS  — shuffle + FF (NeMo-style)
 │   │       ├── modified_first_fit_decreasing.rs  # MFFD — 5-phase Johnson & Garey
-│   │       ├── optimised_best_fit_decreasing.rs  # OBFD — capacity segment tree (default)
-│   │       ├── optimised_best_fit_decreasing_parallel.rs  # OBFDP — Rayon parallel
+│   │       ├── optimized_best_fit_decreasing.rs  # OBFD — capacity segment tree (default)
+│   │       ├── optimized_best_fit_decreasing_parallel.rs  # OBFDP — Rayon parallel
 │   │       ├── harmonic.rs        # HK  — bounded-space online
 │   │       └── counting_sort.rs   # Shared utility
 │   └── tests/

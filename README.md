@@ -2,19 +2,31 @@
 
 High-performance sequence packing for LLM training, written in Rust with Python bindings.
 
+[![CI](https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml/badge.svg)](https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml)
 [![Crates.io](https://img.shields.io/crates/v/seqpacker)](https://crates.io/crates/seqpacker)
 [![PyPI](https://img.shields.io/pypi/v/seqpacker)](https://pypi.org/project/seqpacker/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## What is seqpacker?
+---
 
-When training LLMs on variable-length sequences, naive padding wastes 20-40% of GPU compute. seqpacker solves this by packing sequences into fixed-size bins, achieving 95-99% utilization.
+Training LLMs on variable-length sequences? Naive padding wastes **20-40% of GPU compute**. seqpacker packs sequences into fixed-size bins, achieving **95-99% utilization** with 11 bin-packing algorithms — from O(n) streaming to near-optimal offline.
+
+**Key features:**
+- 11 algorithms (NF, FF, BF, WF, FFD, BFD, FFS, MFFD, OBFD, OBFDP, HK)
+- Streaming API for bounded-space packing
+- PyTorch integration with GPU-ready tensors
+- NumPy zero-copy input support
+- Cross-platform: Linux, macOS, Windows
+- Python 3.9-3.13
 
 ## Installation
 
 ```bash
-# Python
+# Python (pip)
 pip install seqpacker
+
+# Python (uv)
+uv add seqpacker
 
 # Rust
 cargo add seqpacker
@@ -27,9 +39,11 @@ cargo add seqpacker
 ```python
 from seqpacker import pack_sequences
 
-result = pack_sequences([500, 600, 400, 1000], capacity=2048)
-print(result.bins)        # [[0, 3], [1, 2]]
-print(result.efficiency)  # 0.976...
+lengths = [1000, 800, 600, 500, 400, 300, 200, 100]
+result = pack_sequences(lengths, capacity=1024)
+
+print(result.bins)        # [[0], [1, 7], [2, 4], [3, 5, 6]]
+print(result.efficiency)  # 0.952...
 ```
 
 ### Rust
@@ -37,10 +51,10 @@ print(result.efficiency)  # 0.976...
 ```rust
 use seqpacker::{Packer, PackStrategy};
 
-let packer = Packer::new(2048)
-    .with_strategy(PackStrategy::FirstFitDecreasing);
+let packer = Packer::new(1024)
+    .with_strategy(PackStrategy::OptimizedBestFitDecreasing);
 
-let result = packer.pack_lengths(&[500, 600, 400, 1000]).unwrap();
+let result = packer.pack_lengths(&[1000, 800, 600, 500, 400, 300, 200, 100]).unwrap();
 println!("Efficiency: {:.2}%", result.metrics.efficiency * 100.0);
 ```
 
@@ -65,8 +79,8 @@ println!("Efficiency: {:.2}%", result.metrics.efficiency * 100.0);
 ```python
 from seqpacker import Packer
 
-# Use any algorithm by short name
-packer = Packer(capacity=2048, strategy="ffd")
+# Use any algorithm by short name (default: obfd)
+packer = Packer(capacity=2048, strategy="obfd")
 result = packer.pack([500, 600, 400, 1000])
 
 # List all available strategies
@@ -75,7 +89,7 @@ print(Packer.strategies())
 
 ## Usage Modes
 
-### 1. Batch Packing
+### Batch Packing
 
 Pack all sequences at once. Best for offline dataset preprocessing. All 11 algorithms available.
 
@@ -92,7 +106,7 @@ print(f"Efficiency: {result.efficiency:.2%}")
 print(f"Packs: {result.num_bins}")
 ```
 
-### 2. Streaming
+### Streaming
 
 Feed sequences one at a time. Completed packs are emitted incrementally. Only bounded-space algorithms supported: NextFit (`nf`) and Harmonic-K (`hk`).
 
@@ -109,7 +123,7 @@ for pack in sp.finish():
     process(pack)      # flush remaining
 ```
 
-### 3. Buffer + Batch
+### Buffer + Batch
 
 Accumulate sequences into a buffer and pack periodically. Requires no special library support -- just call `pack()` on each buffer. All algorithms available.
 
@@ -182,40 +196,28 @@ bins = np.split(items_flat, bin_offsets)
 
 ## Performance
 
-seqpacker is 1.3-1.5x faster than LightBinPack with equal packing efficiency, benchmarked on real-world datasets (Alpaca, UltraChat, C4).
+seqpacker achieves equal packing efficiency to competitors while being significantly faster:
 
-| Dataset | Sequences | seqpacker (OBFD) | LightBinPack | Speedup |
-|---------|-----------|-----------------|--------------|---------|
-| Alpaca | 52K | 2.1ms | 3.1ms | 1.5x |
-| UltraChat | 200K | 8.3ms | 11.2ms | 1.3x |
-| C4 (sample) | 500K | 19.7ms | 28.4ms | 1.4x |
+| Comparison | Speedup | Efficiency |
+|------------|---------|------------|
+| vs LightBinPack (C++) | ~1.2-1.5x faster | Equal (98.76%) |
+| vs greedy_ffd (Python) | ~400x faster | Equal |
+| vs binpacking (Python) | ~1,700x faster | Equal |
+| vs prtpy (Python) | ~1,900x faster | Equal |
 
-All algorithms achieve >98% packing efficiency on typical LLM workloads.
+> Benchmarked on 10,000 sequences across real-world datasets (Alpaca, UltraChat, C4).
+> See the [interactive benchmark dashboard](https://alphakhaw.github.io/seqpacker/benchmarks/) for detailed results.
 
-## Project Structure
+## Contributing
 
-```
-seqpacker/
-  crates/seqpacker/     # Pure Rust core library (publishable to crates.io)
-  bindings/python/      # PyO3 bindings → seqpacker._core
-  python/seqpacker/     # Python package (re-exports + torch_utils)
-  tests/                # Python tests
-  benchmarks/           # Performance benchmarks
-```
-
-## Development
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions and development workflow.
 
 ```bash
-make build-dev     # Dev build (maturin develop)
-make test          # Run all tests (Rust + Python)
-make test-rust     # Rust tests only
-make test-python   # Python tests only
-make lint          # Lint all (clippy + ruff)
-make fmt           # Format all (cargo fmt + ruff)
+make install       # Install dependencies
+make build-dev     # Build the Rust extension
+make test          # Run all tests (400 Rust + 249 Python)
 make help          # See all commands
 ```
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full development guide.
 
 ## License
 
