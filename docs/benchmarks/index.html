@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>SeqPacker vs the World | SeqPacker Benchmarks</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="modulepreload" href="./_observablehq/client.886c1ba9.js">
+<link rel="modulepreload" href="./_observablehq/runtime.607a8173.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.277aeab8.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/e324157d.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.31cd1366.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/7c43807f.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/18cbf477.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e93ca09f.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/0f2de24d.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/65eb105b.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/7ef8fb2e.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/aeb57b94.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/1d2aed74.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/5ced1d52.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/9ba9c7f3.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/4202580c.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/cdd7e898.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/b4e2ad9a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e804d15.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.2/3785bf2d.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/40599fb3.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/e49e792c.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/8d1e5425.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/20d3f133.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/7553081f.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/0dfd751c.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/3c90ee06.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/720b7f0a.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/ba24c2e7.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/4d94e5b7.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/6d3a6726.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/9f03c579.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/07c9626f.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/b58a267d.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/004da2ac.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/b5786b3f.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/53fe8176.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/e08981d9.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/02d43215.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/cbf6ba23.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/aa00730b.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --theme-foreground: #1b1e23;
+    --theme-background: #ffffff;
+    --theme-accent: #4269d0;
+    --theme-accent-light: #e8eefb;
+    --blue-600: #4269d0;
+    --blue-500: #5b7fd6;
+    --blue-100: #e8eefb;
+    --blue-50: #f4f7fd;
+    --green-600: #16a34a;
+    --green-100: #dcfce7;
+    --orange-600: #ea580c;
+    --orange-100: #ffedd5;
+    --red-500: #ef4444;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  }
+
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+  h1, h2, h3 { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
+  h1 { font-weight: 800; font-size: 2rem; color: var(--gray-900); }
+  h2 { font-weight: 700; font-size: 1.35rem; color: var(--gray-800); margin-top: 2.5rem; }
+  h3 { font-weight: 600; font-size: 1.05rem; color: var(--gray-700); }
+  code { font-family: 'JetBrains Mono', monospace; }
+
+  /* Card system */
+  .card {
+    padding: 1.5rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  /* KPI / Hero metric cards */
+  .kpi-card {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .kpi-card .kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+  .kpi-card .kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .kpi-card .kpi-sub {
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+  .kpi-blue { background: var(--blue-50); border-color: var(--blue-500); }
+  .kpi-blue .kpi-label { color: var(--blue-600); }
+  .kpi-blue .kpi-value { color: var(--blue-600); }
+  .kpi-blue .kpi-sub { color: var(--blue-500); }
+  .kpi-green { background: #f0fdf4; border-color: var(--green-600); }
+  .kpi-green .kpi-label { color: var(--green-600); }
+  .kpi-green .kpi-value { color: var(--green-600); }
+  .kpi-green .kpi-sub { color: #22c55e; }
+  .kpi-orange { background: #fff7ed; border-color: var(--orange-600); }
+  .kpi-orange .kpi-label { color: var(--orange-600); }
+  .kpi-orange .kpi-value { color: var(--orange-600); }
+  .kpi-orange .kpi-sub { color: #f97316; }
+
+  /* Section dividers */
+  .section-divider {
+    border: none;
+    border-top: 2px solid var(--gray-100);
+    margin: 2.5rem 0 2rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+  .section-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .badge-blue { background: var(--blue-100); color: var(--blue-600); }
+  .badge-green { background: var(--green-100); color: var(--green-600); }
+  .badge-orange { background: var(--orange-100); color: var(--orange-600); }
+
+  .subtitle {
+    color: var(--gray-500);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Filter container */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    align-items: end;
+  }
+  .filter-bar label { font-size: 0.8rem; font-weight: 600; color: var(--gray-600); }
+  .filter-bar select {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    background: white;
+  }
+
+  /* Comparison table */
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .comparison-table thead th {
+    background: var(--gray-50);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    text-align: left;
+    border-bottom: 2px solid var(--gray-200);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .comparison-table tbody td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+  .comparison-table tbody tr:hover { background: var(--blue-50); }
+  .comparison-table .highlight-row { background: var(--blue-50); font-weight: 600; }
+  .comparison-table .pkg-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .comparison-table .badge-rust { background: #fef3c7; color: #92400e; }
+  .comparison-table .badge-python { background: #dbeafe; color: #1e40af; }
+  .comparison-table .badge-naive { background: var(--gray-100); color: var(--gray-500); }
+  .comparison-table .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+  /* Chart container */
+  .chart-container {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Insight callout */
+  .insight-box {
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid;
+    margin: 1.5rem 0;
+  }
+  .insight-blue { background: var(--blue-50); border-color: var(--blue-600); }
+  .insight-green { background: #f0fdf4; border-color: var(--green-600); }
+  .insight-orange { background: #fff7ed; border-color: var(--orange-600); }
+  .insight-box p { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--gray-700); }
+  .insight-box strong { color: var(--gray-900); }
+
+  /* Tag / pill styling */
+  .algo-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+
+  /* Hero banner */
+  .hero-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #4269d0 100%);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-banner h1 { color: white; font-size: 1.75rem; margin: 0 0 0.35rem; }
+  .hero-banner p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin: 0; }
+
+  /* Grid tweaks */
+  .grid { gap: 1rem; }
+
+  /* Responsive charts — Observable Plot SVGs fill their container */
+  .chart-container svg, figure svg { max-width: 100%; height: auto; }
+
+  /* Scrollable table wrapper for narrow viewports */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+  }
+  .table-scroll .comparison-table {
+    border: none;
+    border-radius: 0;
+    min-width: 580px;
+  }
+
+  /* Sidebar: full-height with visible border */
+  #observablehq-sidebar {
+    border-right: 1px solid var(--gray-200);
+    background: var(--gray-50);
+  }
+
+  /* Collapsed rail: subtle background so users know it's there */
+  #observablehq-sidebar-toggle {
+    background: var(--gray-50);
+    border-right: 1px solid var(--gray-200);
+    transition: background 0.15s;
+  }
+  #observablehq-sidebar-toggle:hover {
+    background: var(--gray-100);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-banner { padding: 1.5rem 1.25rem 1.25rem; }
+    .hero-banner h1 { font-size: 1.35rem; }
+    .hero-banner p { font-size: 0.85rem; }
+    .kpi-card .kpi-value { font-size: 1.6rem; }
+    .kpi-card .kpi-label { font-size: 0.65rem; }
+    .grid.grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid.grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+    .comparison-table { font-size: 0.75rem; }
+    .comparison-table thead th { padding: 0.5rem 0.6rem; font-size: 0.65rem; }
+    .comparison-table tbody td { padding: 0.4rem 0.6rem; }
+    .chart-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
+
+  @media (max-width: 480px) {
+    .grid.grid-cols-4 { grid-template-columns: 1fr; }
+    .grid.grid-cols-3 { grid-template-columns: 1fr; }
+    .grid.grid-cols-2 { grid-template-columns: 1fr; }
+    .hero-banner { border-radius: 10px; }
+    .kpi-card .kpi-value { font-size: 1.4rem; }
+  }
+</style>
+<script type="module">
+
+import {define} from "./_observablehq/client.886c1ba9.js";
+import {registerFile} from "./_observablehq/stdlib.277aeab8.js";
+
+registerFile("./data/competitors.json", {"name":"./data/competitors.json","mimeType":"application/json","path":"./_file/data/competitors.0ca075ee.json","lastModified":1773150701230,"size":233065});
+
+define({id: "5644bd45", inputs: ["FileAttachment"], outputs: ["data","seqpacker","competitors","datasets","seqpackerCapacities","capacities"], body: async (FileAttachment) => {
+const data = await FileAttachment("./data/competitors.json").json();
+const seqpacker = data.filter(d => d.package === "seqpacker");
+const competitors = data.filter(d => d.package !== "seqpacker");
+const datasets = [...new Set(data.map(d => d.dataset))].sort();
+// Only show capacities where seqpacker has data
+const seqpackerCapacities = new Set(seqpacker.map(d => d.capacity));
+const capacities = [...new Set(data.map(d => d.capacity))].filter(c => seqpackerCapacities.has(c)).sort((a, b) => a - b);
+return {data,seqpacker,competitors,datasets,seqpackerCapacities,capacities};
+}});
+
+define({id: "9561006a", inputs: ["view","Inputs","datasets","capacities"], outputs: ["selectedDataset","selectedCapacity"], body: (view,Inputs,datasets,capacities) => {
+const selectedDataset = view(Inputs.select(datasets, {label: "Dataset", value: "Alpaca"}));
+const selectedCapacity = view(Inputs.select(capacities, {label: "Capacity", value: 2048, format: d => d.toLocaleString()}));
+return {selectedDataset,selectedCapacity};
+}});
+
+define({id: "c2edc3b7", inputs: ["data","selectedDataset","selectedCapacity"], outputs: ["filtered","filteredSeqpacker","filteredCompetitors","obfd","fastestCompetitor","fastestSeqpacker","speedupVsFastest"], body: (data,selectedDataset,selectedCapacity) => {
+const filtered = data.filter(d => d.dataset === selectedDataset && d.capacity === selectedCapacity);
+const filteredSeqpacker = filtered.filter(d => d.package === "seqpacker");
+const filteredCompetitors = filtered.filter(d => d.package !== "seqpacker" && d.package !== "Naive Padding");
+const obfd = filteredSeqpacker.find(d => d.algorithm === "seqpacker OBFD");
+const fastestCompetitor = filteredCompetitors.length ? filteredCompetitors.reduce((a, b) => a.time_ms < b.time_ms ? a : b) : null;
+const fastestSeqpacker = filteredSeqpacker.length ? filteredSeqpacker.reduce((a, b) => a.time_ms < b.time_ms ? a : b) : null;
+const speedupVsFastest = fastestCompetitor && obfd ? (fastestCompetitor.time_ms / obfd.time_ms) : 0;
+return {filtered,filteredSeqpacker,filteredCompetitors,obfd,fastestCompetitor,fastestSeqpacker,speedupVsFastest};
+}});
+
+define({id: "d26911d9", mode: "inline", inputs: ["speedupVsFastest","display"], body: async (speedupVsFastest,display) => {
+display(await(
+speedupVsFastest ? speedupVsFastest.toFixed(1) : "—"
+))
+}});
+
+define({id: "e95b03c5", mode: "inline", inputs: ["fastestCompetitor","display"], body: async (fastestCompetitor,display) => {
+display(await(
+fastestCompetitor ? fastestCompetitor.package : ""
+))
+}});
+
+define({id: "7efa9be4", mode: "inline", inputs: ["obfd","display"], body: async (obfd,display) => {
+display(await(
+obfd ? obfd.efficiency.toFixed(2) : "—"
+))
+}});
+
+define({id: "6babb8c5", mode: "inline", inputs: ["obfd","display"], body: async (obfd,display) => {
+display(await(
+obfd ? obfd.time_ms.toFixed(3) : "—"
+))
+}});
+
+define({id: "1c023b31", mode: "inline", inputs: ["fastestSeqpacker","display"], body: async (fastestSeqpacker,display) => {
+display(await(
+fastestSeqpacker ? fastestSeqpacker.time_ms.toFixed(3) : "—"
+))
+}});
+
+define({id: "ca3dfbd8", mode: "inline", inputs: ["fastestSeqpacker","display"], body: async (fastestSeqpacker,display) => {
+display(await(
+fastestSeqpacker ? fastestSeqpacker.algorithm.replace("seqpacker ", "") : ""
+))
+}});
+
+define({id: "022a5648", inputs: ["fastestCompetitor","obfd","filteredCompetitors"], outputs: ["fastestCompTime","tableRows"], body: (fastestCompetitor,obfd,filteredCompetitors) => {
+// Build comparison table data: SeqPacker OBFD (recommended default) + all competitors
+const fastestCompTime = fastestCompetitor ? fastestCompetitor.time_ms : 1;
+const tableRows = [
+  ...(obfd ? [{
+    package: "SeqPacker",
+    algorithm: "OBFD (recommended)",
+    type: "rust",
+    efficiency: obfd.efficiency,
+    time_ms: obfd.time_ms,
+    throughput: obfd.throughput,
+    speedup: fastestCompTime / obfd.time_ms,
+  }] : []),
+  ...filteredCompetitors.map(d => ({
+    package: d.package,
+    algorithm: d.algorithm,
+    type: "python",
+    efficiency: d.efficiency,
+    time_ms: d.time_ms,
+    throughput: d.throughput,
+    speedup: fastestCompTime / d.time_ms,
+  })),
+].sort((a, b) => a.time_ms - b.time_ms);
+return {fastestCompTime,tableRows};
+}});
+
+define({id: "14a64ce2", inputs: ["html","tableRows","display"], outputs: ["makeTable","wrapper"], body: (html,tableRows,display) => {
+function makeTable(rows) {
+  const thead = html`<thead><tr>
+    <th>Package</th>
+    <th>Language</th>
+    <th style="text-align:right">Time (ms)</th>
+    <th style="text-align:right">Efficiency</th>
+    <th style="text-align:right">Throughput</th>
+    <th style="text-align:right">Relative Speed</th>
+  </tr></thead>`;
+
+  const tbody = html`<tbody>${rows.map(d => {
+    const cls = d.type === "rust" ? "highlight-row" : "";
+    const badgeCls = d.type === "rust" ? "badge-rust" : "badge-python";
+    const lang = d.type === "rust" ? "Rust + PyO3" : "Python";
+    const algo = d.algorithm.replace(d.package + " ", "").replace(d.package, "");
+    const relSpeed = d.speedup > 1
+      ? `${d.speedup.toFixed(1)}× faster`
+      : d.speedup < 1
+        ? `${(1/d.speedup).toFixed(1)}× slower`
+        : "baseline";
+    const tp = d.throughput ? `${(d.throughput / 1000).toFixed(0)}k seq/s` : "—";
+    return html`<tr class="${cls}">
+      <td><strong>${d.package}</strong> <span class="algo-tag">${algo}</span></td>
+      <td><span class="pkg-badge ${badgeCls}">${lang}</span></td>
+      <td style="text-align:right" class="mono">${d.time_ms.toFixed(3)}</td>
+      <td style="text-align:right" class="mono">${d.efficiency.toFixed(2)}%</td>
+      <td style="text-align:right" class="mono">${tp}</td>
+      <td style="text-align:right" class="mono">${relSpeed}</td>
+    </tr>`;
+  })}</tbody>`;
+
+  return html`<table class="comparison-table">${thead}${tbody}</table>`;
+}
+
+const wrapper = html`<div class="table-scroll">${makeTable(tableRows)}</div>`;
+display(wrapper);
+return {makeTable,wrapper};
+}});
+
+define({id: "07ae33d6", inputs: ["data","selectedCapacity","datasets"], outputs: ["allAtCapacity","algos","avgSpeedups"], body: (data,selectedCapacity,datasets) => {
+// Compute per-algorithm average speedup across ALL datasets (not just selected)
+const allAtCapacity = data.filter(d => d.capacity === selectedCapacity);
+const algos = [...new Set(allAtCapacity.filter(d => d.package === "seqpacker").map(d => d.algorithm))];
+const avgSpeedups = algos.map(algo => {
+  const perDataset = datasets.map(ds => {
+    const dsData = allAtCapacity.filter(d => d.dataset === ds);
+    const sq = dsData.find(d => d.algorithm === algo);
+    const comps = dsData.filter(d => d.package !== "seqpacker" && d.package !== "Naive Padding");
+    const fastest = comps.length ? comps.reduce((a, b) => a.time_ms < b.time_ms ? a : b) : null;
+    return sq && fastest ? fastest.time_ms / sq.time_ms : null;
+  }).filter(v => v !== null);
+  const avg = perDataset.length ? perDataset.reduce((a, b) => a + b, 0) / perDataset.length : 0;
+  const min = perDataset.length ? Math.min(...perDataset) : 0;
+  const max = perDataset.length ? Math.max(...perDataset) : 0;
+  return {
+    displayName: algo.replace("seqpacker ", ""),
+    avgSpeedup: avg,
+    minSpeedup: min,
+    maxSpeedup: max,
+    n: perDataset.length,
+  };
+}).filter(d => d.n > 0).sort((a, b) => b.avgSpeedup - a.avgSpeedup);
+return {allAtCapacity,algos,avgSpeedups};
+}});
+
+define({id: "da6bab77", inputs: ["Plot","avgSpeedups","display"], body: async (Plot,avgSpeedups,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 80,
+  marginRight: 120,
+  height: Math.max(320, avgSpeedups.length * 32),
+  x: {label: "Average speedup vs fastest competitor (×) →", grid: true},
+  y: {label: null},
+  marks: [
+    Plot.barX(avgSpeedups, {
+      y: "displayName",
+      x: "avgSpeedup",
+      fill: d => d.avgSpeedup >= 10 ? "#4269d0" : "#93c5fd",
+      sort: {y: "-x"},
+      tip: true,
+      rx: 3,
+    }),
+    Plot.ruleX([1], {stroke: "#ef4444", strokeWidth: 1.5, strokeDasharray: "4,3"}),
+    Plot.text(avgSpeedups, {
+      y: "displayName",
+      x: "avgSpeedup",
+      text: d => `${d.avgSpeedup.toFixed(1)}× avg (${d.minSpeedup.toFixed(0)}–${d.maxSpeedup.toFixed(0)}×)`,
+      dx: 6,
+      textAnchor: "start",
+      fontWeight: 600,
+      fontSize: 11,
+      fill: "#374151",
+    }),
+  ]
+})
+))
+}});
+
+define({id: "f7fd09f4", inputs: ["filtered"], outputs: ["effData"], body: (filtered) => {
+const effData = filtered.filter(d => d.package !== "Naive Padding");
+return {effData};
+}});
+
+define({id: "6914aab4", inputs: ["Plot","effData","d3","display"], body: async (Plot,effData,d3,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 170,
+  height: Math.max(380, effData.length * 22),
+  x: {label: "Packing Efficiency (%) →", domain: [Math.min(90, d3.min(effData, d => d.efficiency) - 1), 100.5], grid: true},
+  y: {label: null},
+  color: {
+    domain: ["seqpacker", "LightBinPack", "Greedy FFD (Python)", "prtpy FFD", "prtpy FF", "binpacking (Python)"],
+    range: ["#4269d0", "#f59e0b", "#ef4444", "#10b981", "#8b5cf6", "#ec4899"],
+  },
+  marks: [
+    Plot.dot(effData, {
+      y: "algorithm",
+      x: "efficiency",
+      fill: "package",
+      stroke: "white",
+      strokeWidth: 1.5,
+      r: 7,
+      sort: {y: "-x"},
+      tip: true,
+    }),
+    Plot.ruleX([99], {stroke: "#d1d5db", strokeDasharray: "3,3"}),
+    Plot.text([{x: 99, label: "99%"}], {x: "x", text: "label", dy: -10, fill: "#9ca3af", fontSize: 10}),
+  ]
+})
+))
+}});
+
+define({id: "6d77ef45", inputs: ["filteredCompetitors","obfd"], outputs: ["headToHead"], body: (filteredCompetitors,obfd) => {
+const headToHead = [...filteredCompetitors, ...(obfd ? [{...obfd, package: "SeqPacker"}] : [])].sort((a, b) => a.time_ms - b.time_ms);
+return {headToHead};
+}});
+
+define({id: "710edab1", inputs: ["Plot","headToHead","display"], body: async (Plot,headToHead,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 170,
+  marginRight: 80,
+  height: Math.max(250, headToHead.length * 42),
+  x: {type: "log", label: "Time (ms) →", grid: true},
+  y: {label: null},
+  marks: [
+    Plot.barX(headToHead, {
+      y: "algorithm",
+      x: "time_ms",
+      fill: d => d.package === "SeqPacker" || d.package === "seqpacker" ? "#4269d0" : "#f59e0b",
+      sort: {y: "x"},
+      tip: true,
+      rx: 3,
+    }),
+    Plot.text(headToHead, {
+      y: "algorithm",
+      x: "time_ms",
+      text: d => `${d.time_ms.toFixed(2)} ms`,
+      dx: 6,
+      textAnchor: "start",
+      fontWeight: 500,
+      fontSize: 11,
+      fill: "#374151",
+    }),
+    Plot.ruleX([0]),
+  ]
+})
+))
+}});
+
+</script>
+</head>
+<body>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link observablehq-link-active"><a href="./">SeqPacker Benchmarks</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link observablehq-link-active"><a href="./">SeqPacker vs the World</a></li>
+    <li class="observablehq-link"><a href="./algorithms">Algorithm Selection Guide</a></li>
+    <li class="observablehq-link"><a href="./builds">Build Optimization</a></li>
+  </ol>
+</nav>
+<script>{const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+<div>Contents</div>
+<ol>
+<li class="observablehq-secondary-link"><a href="#package-comparison">Package Comparison</a></li>
+<li class="observablehq-secondary-link"><a href="#average-speedup-vs-fastest-competitor">Average Speedup vs Fastest Competitor</a></li>
+<li class="observablehq-secondary-link"><a href="#efficiency-parity">Efficiency Parity</a></li>
+<li class="observablehq-secondary-link"><a href="#python-packages-head-to-head">Python Packages: Head-to-Head</a></li>
+</ol>
+</nav>
+</aside>
+<main id="observablehq-main" class="observablehq">
+<div class="hero-banner">
+  <h1>SeqPacker vs the World</h1>
+  <p>High-performance sequence packing for LLM training — benchmarked against every popular Python package.</p>
+</div>
+<div class="observablehq observablehq--block"><!--:5644bd45:--></div>
+<div class="observablehq observablehq--block"><!--:9561006a:--></div>
+<div class="observablehq observablehq--block"><!--:c2edc3b7:--></div>
+<div class="grid grid-cols-4">
+  <div class="kpi-card kpi-blue">
+    <div class="kpi-label">vs Fastest Competitor</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:d26911d9:-->×</div>
+    <div class="kpi-sub"><observablehq-loading></observablehq-loading><!--:e95b03c5:--></div>
+  </div>
+  <div class="kpi-card kpi-green">
+    <div class="kpi-label">Best Efficiency</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:7efa9be4:-->%</div>
+    <div class="kpi-sub">near-optimal packing</div>
+  </div>
+  <div class="kpi-card kpi-orange">
+    <div class="kpi-label">OBFD Latency</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:6babb8c5:--><span style="font-size:1rem">ms</span></div>
+    <div class="kpi-sub">10k sequences</div>
+  </div>
+  <div class="kpi-card kpi-blue">
+    <div class="kpi-label">Fastest Algorithm</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:1c023b31:--><span style="font-size:1rem">ms</span></div>
+    <div class="kpi-sub"><observablehq-loading></observablehq-loading><!--:ca3dfbd8:--></div>
+  </div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-blue">Comparison</span>
+</div>
+<h2 id="package-comparison" tabindex="-1"><a class="observablehq-header-anchor" href="#package-comparison">Package Comparison</a></h2>
+<p class="subtitle">All packages benchmarked on the same dataset and capacity. SeqPacker provides 11 algorithms — competitors offer one each.</p>
+<div class="observablehq observablehq--block"><!--:022a5648:--></div>
+<div class="observablehq observablehq--block"><!--:14a64ce2:--></div>
+<div class="insight-box insight-blue">
+  <p><strong>Key takeaway:</strong> All packages achieve similar packing efficiency (the math is the same). The difference is raw speed — SeqPacker's Rust core is 5–50× faster than any Python implementation.</p>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-green">Speed</span>
+</div>
+<h2 id="average-speedup-vs-fastest-competitor" tabindex="-1"><a class="observablehq-header-anchor" href="#average-speedup-vs-fastest-competitor">Average Speedup vs Fastest Competitor</a></h2>
+<p class="subtitle">Average speedup across all 7 datasets at the selected capacity. This measures how consistently each SeqPacker algorithm outperforms the fastest Python package per dataset.</p>
+<div class="observablehq observablehq--block"><!--:07ae33d6:--></div>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:da6bab77:--></div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-blue">Quality</span>
+</div>
+<h2 id="efficiency-parity" tabindex="-1"><a class="observablehq-header-anchor" href="#efficiency-parity">Efficiency Parity</a></h2>
+<p class="subtitle">Packing efficiency is determined by the algorithm, not the implementation language. All packages using the same strategy achieve identical results.</p>
+<div class="observablehq observablehq--block"><!--:f7fd09f4:--></div>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:6914aab4:--></div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-orange">Focus</span>
+</div>
+<h2 id="python-packages-head-to-head" tabindex="-1"><a class="observablehq-header-anchor" href="#python-packages-head-to-head">Python Packages: Head-to-Head</a></h2>
+<p class="subtitle">Zooming in on just the competitor packages vs SeqPacker's recommended default (OBFD). The speed gap is enormous.</p>
+<div class="observablehq observablehq--block"><!--:6d77ef45:--></div>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:710edab1:--></div>
+</div>
+<div class="insight-box insight-green">
+  <p><strong>Bottom line:</strong> If you're packing sequences for LLM training, SeqPacker gives you the same quality as Python packages at a fraction of the latency. Drop-in replacement via <code>pip install seqpacker</code>.</p>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="next" href="./algorithms"><span>Algorithm Selection Guide</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-03-10T21:51:29">Mar 10, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>

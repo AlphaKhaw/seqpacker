@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.13.4">
+<title>Algorithm Selection Guide | SeqPacker Benchmarks</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.b050d634.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.f7bf0e12.css">
+<link rel="modulepreload" href="./_observablehq/client.886c1ba9.js">
+<link rel="modulepreload" href="./_observablehq/runtime.607a8173.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.277aeab8.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/e324157d.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/72f4716c.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.31cd1366.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/7c43807f.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/18cbf477.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/e93ca09f.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/0f2de24d.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/65eb105b.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/7ef8fb2e.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/aeb57b94.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/1d2aed74.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/5ced1d52.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/9ba9c7f3.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/4202580c.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/cdd7e898.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/b4e2ad9a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/5e804d15.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.2/3785bf2d.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/40599fb3.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/e49e792c.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/8d1e5425.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/20d3f133.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/7553081f.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/0dfd751c.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/3c90ee06.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/720b7f0a.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/ba24c2e7.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/4d94e5b7.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/6d3a6726.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/9f03c579.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/07c9626f.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/b58a267d.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/004da2ac.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/b5786b3f.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/53fe8176.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/e08981d9.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/02d43215.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/cbf6ba23.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/aa00730b.js">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --theme-foreground: #1b1e23;
+    --theme-background: #ffffff;
+    --theme-accent: #4269d0;
+    --theme-accent-light: #e8eefb;
+    --blue-600: #4269d0;
+    --blue-500: #5b7fd6;
+    --blue-100: #e8eefb;
+    --blue-50: #f4f7fd;
+    --green-600: #16a34a;
+    --green-100: #dcfce7;
+    --orange-600: #ea580c;
+    --orange-100: #ffedd5;
+    --red-500: #ef4444;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  }
+
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+  h1, h2, h3 { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; }
+  h1 { font-weight: 800; font-size: 2rem; color: var(--gray-900); }
+  h2 { font-weight: 700; font-size: 1.35rem; color: var(--gray-800); margin-top: 2.5rem; }
+  h3 { font-weight: 600; font-size: 1.05rem; color: var(--gray-700); }
+  code { font-family: 'JetBrains Mono', monospace; }
+
+  /* Card system */
+  .card {
+    padding: 1.5rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-md); }
+
+  /* KPI / Hero metric cards */
+  .kpi-card {
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .kpi-card .kpi-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+  .kpi-card .kpi-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  .kpi-card .kpi-sub {
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+  .kpi-blue { background: var(--blue-50); border-color: var(--blue-500); }
+  .kpi-blue .kpi-label { color: var(--blue-600); }
+  .kpi-blue .kpi-value { color: var(--blue-600); }
+  .kpi-blue .kpi-sub { color: var(--blue-500); }
+  .kpi-green { background: #f0fdf4; border-color: var(--green-600); }
+  .kpi-green .kpi-label { color: var(--green-600); }
+  .kpi-green .kpi-value { color: var(--green-600); }
+  .kpi-green .kpi-sub { color: #22c55e; }
+  .kpi-orange { background: #fff7ed; border-color: var(--orange-600); }
+  .kpi-orange .kpi-label { color: var(--orange-600); }
+  .kpi-orange .kpi-value { color: var(--orange-600); }
+  .kpi-orange .kpi-sub { color: #f97316; }
+
+  /* Section dividers */
+  .section-divider {
+    border: none;
+    border-top: 2px solid var(--gray-100);
+    margin: 2.5rem 0 2rem;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.35rem;
+  }
+  .section-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+  .badge-blue { background: var(--blue-100); color: var(--blue-600); }
+  .badge-green { background: var(--green-100); color: var(--green-600); }
+  .badge-orange { background: var(--orange-100); color: var(--orange-600); }
+
+  .subtitle {
+    color: var(--gray-500);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Filter container */
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    align-items: end;
+  }
+  .filter-bar label { font-size: 0.8rem; font-weight: 600; color: var(--gray-600); }
+  .filter-bar select {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--gray-300);
+    border-radius: 6px;
+    background: white;
+  }
+
+  /* Comparison table */
+  .comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .comparison-table thead th {
+    background: var(--gray-50);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    text-align: left;
+    border-bottom: 2px solid var(--gray-200);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .comparison-table tbody td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--gray-100);
+    color: var(--gray-700);
+  }
+  .comparison-table tbody tr:last-child td { border-bottom: none; }
+  .comparison-table tbody tr:hover { background: var(--blue-50); }
+  .comparison-table .highlight-row { background: var(--blue-50); font-weight: 600; }
+  .comparison-table .pkg-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+  }
+  .comparison-table .badge-rust { background: #fef3c7; color: #92400e; }
+  .comparison-table .badge-python { background: #dbeafe; color: #1e40af; }
+  .comparison-table .badge-naive { background: var(--gray-100); color: var(--gray-500); }
+  .comparison-table .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+  /* Chart container */
+  .chart-container {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Insight callout */
+  .insight-box {
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid;
+    margin: 1.5rem 0;
+  }
+  .insight-blue { background: var(--blue-50); border-color: var(--blue-600); }
+  .insight-green { background: #f0fdf4; border-color: var(--green-600); }
+  .insight-orange { background: #fff7ed; border-color: var(--orange-600); }
+  .insight-box p { margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--gray-700); }
+  .insight-box strong { color: var(--gray-900); }
+
+  /* Tag / pill styling */
+  .algo-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+
+  /* Hero banner */
+  .hero-banner {
+    background: linear-gradient(135deg, #1e3a5f 0%, #4269d0 100%);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+  .hero-banner h1 { color: white; font-size: 1.75rem; margin: 0 0 0.35rem; }
+  .hero-banner p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin: 0; }
+
+  /* Grid tweaks */
+  .grid { gap: 1rem; }
+
+  /* Responsive charts — Observable Plot SVGs fill their container */
+  .chart-container svg, figure svg { max-width: 100%; height: auto; }
+
+  /* Scrollable table wrapper for narrow viewports */
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+  }
+  .table-scroll .comparison-table {
+    border: none;
+    border-radius: 0;
+    min-width: 580px;
+  }
+
+  /* Sidebar: full-height with visible border */
+  #observablehq-sidebar {
+    border-right: 1px solid var(--gray-200);
+    background: var(--gray-50);
+  }
+
+  /* Collapsed rail: subtle background so users know it's there */
+  #observablehq-sidebar-toggle {
+    background: var(--gray-50);
+    border-right: 1px solid var(--gray-200);
+    transition: background 0.15s;
+  }
+  #observablehq-sidebar-toggle:hover {
+    background: var(--gray-100);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-banner { padding: 1.5rem 1.25rem 1.25rem; }
+    .hero-banner h1 { font-size: 1.35rem; }
+    .hero-banner p { font-size: 0.85rem; }
+    .kpi-card .kpi-value { font-size: 1.6rem; }
+    .kpi-card .kpi-label { font-size: 0.65rem; }
+    .grid.grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid.grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+    .comparison-table { font-size: 0.75rem; }
+    .comparison-table thead th { padding: 0.5rem 0.6rem; font-size: 0.65rem; }
+    .comparison-table tbody td { padding: 0.4rem 0.6rem; }
+    .chart-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
+
+  @media (max-width: 480px) {
+    .grid.grid-cols-4 { grid-template-columns: 1fr; }
+    .grid.grid-cols-3 { grid-template-columns: 1fr; }
+    .grid.grid-cols-2 { grid-template-columns: 1fr; }
+    .hero-banner { border-radius: 10px; }
+    .kpi-card .kpi-value { font-size: 1.4rem; }
+  }
+</style>
+<script type="module">
+
+import {define} from "./_observablehq/client.886c1ba9.js";
+import {registerFile} from "./_observablehq/stdlib.277aeab8.js";
+
+registerFile("./data/algorithms.json", {"name":"./data/algorithms.json","mimeType":"application/json","path":"./_file/data/algorithms.e4078f4c.json","lastModified":1773150700925,"size":124139});
+
+define({id: "997a2482", inputs: ["FileAttachment"], outputs: ["data","datasets","capacities","strategyTypes"], body: async (FileAttachment) => {
+const data = await FileAttachment("./data/algorithms.json").json();
+const datasets = [...new Set(data.map(d => d.dataset))].sort();
+const capacities = [...new Set(data.map(d => d.capacity))].sort((a, b) => a - b);
+const strategyTypes = [...new Set(data.map(d => d.strategy_type))].sort();
+return {data,datasets,capacities,strategyTypes};
+}});
+
+define({id: "e03b7b73", inputs: ["view","Inputs","datasets","capacities","strategyTypes"], outputs: ["selectedDataset","selectedCapacity","selectedTypes"], body: (view,Inputs,datasets,capacities,strategyTypes) => {
+const selectedDataset = view(Inputs.select(datasets, {label: "Dataset", value: "Alpaca"}));
+const selectedCapacity = view(Inputs.select(capacities, {label: "Capacity", value: 2048, format: d => d.toLocaleString()}));
+const selectedTypes = view(Inputs.checkbox(strategyTypes, {label: "Strategy type", value: strategyTypes}));
+return {selectedDataset,selectedCapacity,selectedTypes};
+}});
+
+define({id: "7971dd2a", inputs: ["data","selectedDataset","selectedCapacity","selectedTypes"], outputs: ["filtered","allCapacity"], body: (data,selectedDataset,selectedCapacity,selectedTypes) => {
+const filtered = data.filter(
+  d => d.dataset === selectedDataset
+    && d.capacity === selectedCapacity
+    && selectedTypes.includes(d.strategy_type)
+);
+const allCapacity = data.filter(d => d.capacity === selectedCapacity && selectedTypes.includes(d.strategy_type));
+return {filtered,allCapacity};
+}});
+
+define({id: "ea348cb1", mode: "inline", inputs: ["filtered","d3","display"], body: async (filtered,d3,display) => {
+display(await(
+filtered.length ? d3.max(filtered, d => d.efficiency).toFixed(2) : "—"
+))
+}});
+
+define({id: "8a104b41", mode: "inline", inputs: ["filtered","display"], body: async (filtered,display) => {
+display(await(
+filtered.length ? filtered.reduce((a,b) => a.efficiency > b.efficiency ? a : b).strategy : ""
+))
+}});
+
+define({id: "80376ce9", mode: "inline", inputs: ["filtered","d3","display"], body: async (filtered,d3,display) => {
+display(await(
+filtered.length ? d3.min(filtered, d => d.time_ms).toFixed(3) : "—"
+))
+}});
+
+define({id: "6ea49ac1", mode: "inline", inputs: ["filtered","display"], body: async (filtered,display) => {
+display(await(
+filtered.length ? filtered.reduce((a,b) => a.time_ms < b.time_ms ? a : b).strategy : ""
+))
+}});
+
+define({id: "29b75959", mode: "inline", inputs: ["filtered","d3","display"], body: async (filtered,d3,display) => {
+display(await(
+filtered.length ? (d3.max(filtered, d => d.throughput) / 1e6).toFixed(1) : "—"
+))
+}});
+
+define({id: "0260e5f6", inputs: ["Plot","filtered","d3","display"], body: async (Plot,filtered,d3,display) => {
+display(await(
+Plot.plot({
+  height: 450,
+  x: {type: "log", label: "Time (ms) →", grid: true},
+  y: {label: "← Packing Efficiency (%)", grid: true, domain: [filtered.length ? d3.min(filtered, d => d.efficiency) - 2 : 80, 100.5]},
+  color: {
+    domain: ["online", "offline", "parallel"],
+    range: ["#f59e0b", "#4269d0", "#ef4444"],
+    legend: true,
+  },
+  marks: [
+    Plot.dot(filtered, {
+      x: "time_ms",
+      y: "efficiency",
+      fill: "strategy_type",
+      stroke: "white",
+      strokeWidth: 1.5,
+      r: 10,
+      tip: true,
+    }),
+    Plot.text(filtered, {
+      x: "time_ms",
+      y: "efficiency",
+      text: "strategy",
+      dy: -16,
+      fontSize: 11,
+      fontWeight: 600,
+      fill: "#374151",
+    }),
+  ]
+})
+))
+}});
+
+define({id: "97d6a5c3", inputs: ["Plot","filtered","d3","display"], body: async (Plot,filtered,d3,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 80,
+  marginRight: 70,
+  height: Math.max(350, filtered.length * 34),
+  x: {label: "Packing Efficiency (%) →", domain: [filtered.length ? d3.min(filtered, d => d.efficiency) - 3 : 80, 100.5], grid: true},
+  y: {label: null},
+  color: {
+    domain: ["online", "offline", "parallel"],
+    range: ["#f59e0b", "#4269d0", "#ef4444"],
+    legend: true,
+  },
+  marks: [
+    Plot.barX(filtered, {
+      y: "strategy",
+      x: "efficiency",
+      fill: "strategy_type",
+      sort: {y: "-x"},
+      tip: true,
+      rx: 3,
+    }),
+    Plot.text(filtered, {
+      y: "strategy",
+      x: "efficiency",
+      text: d => `${d.efficiency.toFixed(2)}%`,
+      dx: 5,
+      textAnchor: "start",
+      fontSize: 11,
+      fontWeight: 500,
+      fill: "#374151",
+    }),
+  ]
+})
+))
+}});
+
+define({id: "998cb595", inputs: ["Plot","filtered","display"], body: async (Plot,filtered,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 80,
+  marginRight: 80,
+  height: Math.max(350, filtered.length * 34),
+  x: {label: "Throughput (sequences/sec) →", grid: true},
+  y: {label: null},
+  color: {
+    domain: ["online", "offline", "parallel"],
+    range: ["#f59e0b", "#4269d0", "#ef4444"],
+    legend: true,
+  },
+  marks: [
+    Plot.barX(filtered, {
+      y: "strategy",
+      x: "throughput",
+      fill: "strategy_type",
+      sort: {y: "-x"},
+      tip: true,
+      rx: 3,
+    }),
+    Plot.text(filtered, {
+      y: "strategy",
+      x: "throughput",
+      text: d => d.throughput >= 1e6 ? `${(d.throughput/1e6).toFixed(1)}M/s` : `${(d.throughput/1e3).toFixed(0)}k/s`,
+      dx: 6,
+      textAnchor: "start",
+      fontSize: 11,
+      fontWeight: 500,
+      fill: "#374151",
+    }),
+    Plot.ruleX([0]),
+  ]
+})
+))
+}});
+
+define({id: "d46db2b5", inputs: ["Plot","allCapacity","display"], body: async (Plot,allCapacity,display) => {
+display(await(
+Plot.plot({
+  marginLeft: 80,
+  marginBottom: 70,
+  height: Math.max(350, [...new Set(allCapacity.map(d => d.strategy))].length * 34),
+  x: {label: null, tickRotate: -40, padding: 0.05},
+  y: {label: null, padding: 0.05},
+  color: {type: "linear", scheme: "YlGnBu", domain: [70, 100], label: "Efficiency (%)", legend: true},
+  marks: [
+    Plot.cell(allCapacity, {
+      x: "dataset",
+      y: "strategy",
+      fill: "efficiency",
+      tip: true,
+      sort: {y: "-fill"},
+      inset: 1.5,
+      rx: 3,
+    }),
+    Plot.text(allCapacity, {
+      x: "dataset",
+      y: "strategy",
+      text: d => d.efficiency.toFixed(1),
+      fontSize: 10,
+      fill: d => d.efficiency > 90 ? "white" : "#374151",
+      fontWeight: 500,
+    }),
+  ]
+})
+))
+}});
+
+define({id: "9753d4ff", inputs: ["filtered"], outputs: ["online","offline"], body: (filtered) => {
+const online = filtered.filter(d => d.strategy_type === "online");
+const offline = filtered.filter(d => d.strategy_type === "offline" || d.strategy_type === "parallel");
+return {online,offline};
+}});
+
+define({id: "dfd37293", inputs: ["online","Plot","d3","html","display"], body: async (online,Plot,d3,html,display) => {
+display(await(
+online.length ? Plot.plot({
+  marginLeft: 50,
+  marginRight: 60,
+  width: 400,
+  height: Math.max(200, online.length * 42),
+  x: {label: "Efficiency (%)", domain: [d3.min(online, d => d.efficiency) - 3, 100.5]},
+  y: {label: null},
+  marks: [
+    Plot.barX(online, {y: "strategy", x: "efficiency", fill: "#f59e0b", sort: {y: "-x"}, tip: true, rx: 3}),
+    Plot.text(online, {y: "strategy", x: d3.min(online, d => d.efficiency) - 2.5, text: "strategy", textAnchor: "start", fontSize: 11, fontWeight: 600, fill: "white"}),
+    Plot.text(online, {y: "strategy", x: "efficiency", text: d => `${d.efficiency.toFixed(1)}%`, dx: 4, textAnchor: "start", fontSize: 11, fontWeight: 500, fill: "#374151"}),
+  ]
+}) : html`<p style="color: var(--gray-400); text-align: center; padding: 2rem;">No online algorithms selected</p>`
+))
+}});
+
+define({id: "5ab81db2", inputs: ["offline","Plot","d3","html","display"], body: async (offline,Plot,d3,html,display) => {
+display(await(
+offline.length ? Plot.plot({
+  marginLeft: 60,
+  marginRight: 60,
+  width: 400,
+  height: Math.max(200, offline.length * 42),
+  x: {label: "Efficiency (%)", domain: [d3.min(offline, d => d.efficiency) - 1, 100.5]},
+  y: {label: null},
+  marks: [
+    Plot.barX(offline, {y: "strategy", x: "efficiency", fill: "#4269d0", sort: {y: "-x"}, tip: true, rx: 3}),
+    Plot.text(offline, {y: "strategy", x: d3.min(offline, d => d.efficiency) - 0.5, text: "strategy", textAnchor: "start", fontSize: 11, fontWeight: 600, fill: "white"}),
+    Plot.text(offline, {y: "strategy", x: "efficiency", text: d => `${d.efficiency.toFixed(1)}%`, dx: 4, textAnchor: "start", fontSize: 11, fontWeight: 500, fill: "#374151"}),
+  ]
+}) : html`<p style="color: var(--gray-400); text-align: center; padding: 2rem;">No offline algorithms selected</p>`
+))
+}});
+
+</script>
+</head>
+<body>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">SeqPacker Benchmarks</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./">SeqPacker vs the World</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./algorithms">Algorithm Selection Guide</a></li>
+    <li class="observablehq-link"><a href="./builds">Build Optimization</a></li>
+  </ol>
+</nav>
+<script>{const e=document.querySelector("#observablehq-sidebar"),o=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?o.checked=r==="true":o.indeterminate=!0;for(const t of document.querySelectorAll("#observablehq-sidebar summary")){const s=t.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${t.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+<div>Contents</div>
+<ol>
+<li class="observablehq-secondary-link"><a href="#time-vs-efficiency">Time vs Efficiency</a></li>
+<li class="observablehq-secondary-link"><a href="#efficiency-by-algorithm">Efficiency by Algorithm</a></li>
+<li class="observablehq-secondary-link"><a href="#throughput">Throughput</a></li>
+<li class="observablehq-secondary-link"><a href="#cross-dataset-ranking">Cross-Dataset Ranking</a></li>
+<li class="observablehq-secondary-link"><a href="#online-vs-offline">Online vs Offline</a></li>
+</ol>
+</nav>
+</aside>
+<main id="observablehq-main" class="observablehq">
+<div class="hero-banner" style="background: linear-gradient(135deg, #1a3c34 0%, #16a34a 100%);">
+  <h1>Algorithm Selection Guide</h1>
+  <p>All 11 bin-packing algorithms in SeqPacker — from O(n) streaming to near-optimal offline strategies.</p>
+</div>
+<div class="observablehq observablehq--block"><!--:997a2482:--></div>
+<div class="observablehq observablehq--block"><!--:e03b7b73:--></div>
+<div class="observablehq observablehq--block"><!--:7971dd2a:--></div>
+<div class="grid grid-cols-3">
+  <div class="kpi-card kpi-green">
+    <div class="kpi-label">Best Efficiency</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:ea348cb1:-->%</div>
+    <div class="kpi-sub"><observablehq-loading></observablehq-loading><!--:8a104b41:--></div>
+  </div>
+  <div class="kpi-card kpi-blue">
+    <div class="kpi-label">Fastest</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:80376ce9:--><span style="font-size:1rem">ms</span></div>
+    <div class="kpi-sub"><observablehq-loading></observablehq-loading><!--:6ea49ac1:--></div>
+  </div>
+  <div class="kpi-card kpi-orange">
+    <div class="kpi-label">Max Throughput</div>
+    <div class="kpi-value"><observablehq-loading></observablehq-loading><!--:29b75959:--><span style="font-size:1rem">M</span></div>
+    <div class="kpi-sub">sequences / sec</div>
+  </div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-green">Tradeoff</span>
+</div>
+<h2 id="time-vs-efficiency" tabindex="-1"><a class="observablehq-header-anchor" href="#time-vs-efficiency">Time vs Efficiency</a></h2>
+<p class="subtitle">The Pareto frontier: algorithms in the top-left corner are the best tradeoff between speed and packing quality.</p>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:0260e5f6:--></div>
+</div>
+<div class="insight-box insight-blue">
+  <p><strong>Recommendation:</strong> Use <strong>OBFD</strong> as the default — it's near-optimal in efficiency with sub-millisecond latency. Switch to <strong>NF</strong> or <strong>HK</strong> only if you need streaming, as these are the only two streaming-capable algorithms in SeqPacker.</p>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-blue">Efficiency</span>
+</div>
+<h2 id="efficiency-by-algorithm" tabindex="-1"><a class="observablehq-header-anchor" href="#efficiency-by-algorithm">Efficiency by Algorithm</a></h2>
+<p class="subtitle">Packing efficiency for the selected dataset and capacity. Offline algorithms (sorted input) consistently outperform online ones.</p>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:97d6a5c3:--></div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-orange">Speed</span>
+</div>
+<h2 id="throughput" tabindex="-1"><a class="observablehq-header-anchor" href="#throughput">Throughput</a></h2>
+<p class="subtitle">Raw throughput in sequences per second. NF's single-pass design makes it the undisputed throughput champion.</p>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:998cb595:--></div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-green">Heatmap</span>
+</div>
+<h2 id="cross-dataset-ranking" tabindex="-1"><a class="observablehq-header-anchor" href="#cross-dataset-ranking">Cross-Dataset Ranking</a></h2>
+<p class="subtitle">How does each algorithm perform across all 7 datasets? Darker = higher efficiency. Algorithms are sorted by average efficiency.</p>
+<div class="chart-container">
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:d46db2b5:--></div>
+</div>
+<hr>
+<div class="section-header">
+  <span class="section-badge badge-blue">Categories</span>
+</div>
+<h2 id="online-vs-offline" tabindex="-1"><a class="observablehq-header-anchor" href="#online-vs-offline">Online vs Offline</a></h2>
+<p class="subtitle">Online algorithms can process sequences as they arrive (streaming). Offline algorithms require all sequences upfront but achieve better packing.</p>
+<div class="observablehq observablehq--block"><!--:9753d4ff:--></div>
+<div class="grid grid-cols-2">
+  <div class="chart-container" style="overflow: hidden;">
+    <h3 style="margin-top:0; color: #d97706;">Online (streaming-capable)</h3>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:dfd37293:--></div>
+  </div>
+  <div class="chart-container" style="overflow: hidden;">
+    <h3 style="margin-top:0; color: #4269d0;">Offline (sort-based)</h3>
+<div class="observablehq observablehq--block"><observablehq-loading></observablehq-loading><!--:5ab81db2:--></div>
+  </div>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./"><span>SeqPacker Benchmarks</span></a><a rel="next" href="./builds"><span>Build Optimization</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2026-03-10T21:51:29">Mar 10, 2026</a>.</div>
+</footer>
+</div>
+</body>
+</html>
