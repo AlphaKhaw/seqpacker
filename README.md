@@ -1,23 +1,35 @@
-# seqpacker
+<h1 align="center">SeqPacker</h1>
 
-High-performance sequence packing for LLM training, written in Rust with Python bindings.
+<p align="center">
+  <em>High-performance sequence packing for LLM training, written in Rust with Python bindings.</em>
+</p>
 
-[![CI](https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml/badge.svg)](https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/seqpacker)](https://crates.io/crates/seqpacker)
-[![PyPI](https://img.shields.io/pypi/v/seqpacker)](https://pypi.org/project/seqpacker/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <a href="https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml"><img src="https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://crates.io/crates/seqpacker"><img src="https://img.shields.io/crates/v/seqpacker" alt="Crates.io"></a>
+  <a href="https://pypi.org/project/seqpacker/"><img src="https://img.shields.io/pypi/v/seqpacker" alt="PyPI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  <a href="https://alphakhaw.github.io/seqpacker/docs/">Documentation</a>
+  &ensp;|&ensp;
+  <a href="https://docs.rs/seqpacker">Rust API</a>
+  &ensp;|&ensp;
+  <a href="https://alphakhaw.github.io/seqpacker/benchmarks/">Benchmarks</a>
+  &ensp;|&ensp;
+  <a href="CONTRIBUTING.md">Contributing</a>
+</p>
 
 ---
 
-Training LLMs on variable-length sequences? Naive padding wastes **20-40% of GPU compute**. seqpacker packs sequences into fixed-size bins, achieving **95-99% utilization** with 11 bin-packing algorithms — from O(n) streaming to near-optimal offline.
+Training LLMs on variable-length sequences? Naive padding wastes **20-40% of GPU compute**. SeqPacker packs sequences into fixed-size bins, achieving **95-99% utilization** with 11 bin-packing algorithms — from O(n) streaming to near-optimal offline.
 
-**Key features:**
-- 11 algorithms (NF, FF, BF, WF, FFD, BFD, FFS, MFFD, OBFD, OBFDP, HK)
-- Streaming API for bounded-space packing
-- PyTorch integration with GPU-ready tensors
-- NumPy zero-copy input support
-- Cross-platform: Linux, macOS, Windows
-- Python 3.9-3.13
+- **11 algorithms** — NF, FF, BF, WF, FFD, BFD, FFS, MFFD, OBFD, OBFDP, HK
+- **Streaming API** — bounded-space packing with incremental output
+- **PyTorch integration** — GPU-ready tensors out of the box
+- **NumPy zero-copy** — pass arrays directly, no conversion overhead
+- **Cross-platform** — Linux, macOS, Windows; Python 3.9-3.13
 
 ## Installation
 
@@ -196,7 +208,7 @@ bins = np.split(items_flat, bin_offsets)
 
 ## Performance
 
-seqpacker achieves equal packing efficiency to competitors while being significantly faster:
+SeqPacker achieves equal packing efficiency to competitors while being significantly faster:
 
 | Comparison | Speedup | Efficiency |
 |------------|---------|------------|

@@ -86,6 +86,16 @@ bench-report:
 	PYTHONPATH=$(CURDIR) uv run python -m benchmarks.python.generate_report
 
 # --------------------------------
+# Docs
+# --------------------------------
+
+docs-serve:
+	uv run --group docs mkdocs serve
+
+docs-build:
+	uv run --group docs mkdocs build
+
+# --------------------------------
 # Cleanup
 # --------------------------------
 
@@ -130,6 +140,10 @@ help:
 	@echo "  make bench-all          All benchmarks"
 	@echo "  make bench-report       Generate reports"
 	@echo ""
+	@echo "Docs:"
+	@echo "  make docs-serve         Preview docs locally"
+	@echo "  make docs-build         Build static docs site"
+	@echo ""
 	@echo "Other:"
 	@echo "  make clean              Remove build artifacts"
 
@@ -140,4 +154,5 @@ help:
 	lint lint-rust lint-python check-rust \
 	pre-commit-install pre-commit-update pre-commit-run \
 	bench-python bench-rust bench-all bench-report \
+	docs-serve docs-build \
 	clean help
