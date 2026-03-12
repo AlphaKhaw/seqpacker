@@ -134,8 +134,11 @@ proptest! {
         }
     }
 
+    /// FFD uses at most ⌈11/9 OPT + 6/9⌉ bins.  A simple lower bound on
+    /// OPT is ⌈total_length / capacity⌉.  Verify FFD stays within that
+    /// theoretical ratio.
     #[test]
-    fn prop_ffd_never_worse_than_nf(
+    fn prop_ffd_within_theoretical_bound(
         lens in prop::collection::vec(1usize..500, 2..100),
         capacity in 50usize..1000,
     ) {
@@ -144,14 +147,19 @@ proptest! {
             return Ok(());
         }
 
-        let nf_packs = NextFit.pack(make_sequences(&valid_lens), capacity)?;
         let ffd_packs = FirstFitDecreasing.pack(make_sequences(&valid_lens), capacity)?;
 
+        let total_len: usize = valid_lens.iter().sum();
+        let opt_lower = (total_len + capacity - 1) / capacity; // ceil(total / cap)
+        // FFD ≤ 11/9 * OPT + 6/9, use integer arithmetic with margin
+        let ffd_upper = (11 * opt_lower + 6 + 8) / 9 + 1;
+
         prop_assert!(
-            ffd_packs.len() <= nf_packs.len(),
-            "FFD ({}) > NF ({}) — should never happen",
+            ffd_packs.len() <= ffd_upper,
+            "FFD ({}) exceeded theoretical bound ({}) for OPT_lb={}",
             ffd_packs.len(),
-            nf_packs.len()
+            ffd_upper,
+            opt_lower
         );
     }
 
