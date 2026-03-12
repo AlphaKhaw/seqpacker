@@ -1,0 +1,17 @@
+[package]
+name = "seqpacker-python"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+description = "Python bindings for seqpacker"
+
+[lib]
+name = "_core"
+crate-type = ["cdylib"]
+
+[dependencies]
+numpy = "0.28"
+pyo3 = { version = "0.28", features = ["extension-module", "abi3-py39"] }
+seqpacker = { path = "../../crates/seqpacker" }
