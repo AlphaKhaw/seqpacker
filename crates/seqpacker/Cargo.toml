@@ -7,7 +7,7 @@ license.workspace = true
 authors.workspace = true
 repository.workspace = true
 documentation.workspace = true
-readme.workspace = true
+readme = "README.md"
 keywords.workspace = true
 categories.workspace = true
 description = "High-performance sequence packing for LLM training"
@@ -19,6 +19,10 @@ serde.workspace = true
 serde_json.workspace = true
 smallvec.workspace = true
 thiserror.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
 
 [dev-dependencies]
 proptest.workspace = true
