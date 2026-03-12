@@ -93,5 +93,9 @@ reports/
 logs/
 *.benchmark
 
+# MkDocs / docs build output
+site/
+_site/
+
 # Claude
 CLAUDE.md
