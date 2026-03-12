@@ -1,0 +1,14 @@
+[package]
+name = "seqpacker-bench"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[[bin]]
+name = "bench"
+path = "src/main.rs"
+
+[dependencies]
+rand.workspace = true
+rand_distr.workspace = true
+seqpacker = { path = "../../crates/seqpacker" }
