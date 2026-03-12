@@ -12,22 +12,22 @@ use crate::pack::Pack;
 use crate::sequence::Sequence;
 use crate::strategy::PackingAlgorithm;
 
-use super::optimised_best_fit_decreasing::{
-    bins_to_packs_from_indices, optimised_best_fit_decreasing_lengths,
+use super::optimized_best_fit_decreasing::{
+    bins_to_packs_from_indices, optimized_best_fit_decreasing_lengths,
 };
 
 /// Parallel OBFD with adaptive thread count.
-pub struct OptimisedBestFitDecreasingParallel;
+pub struct OptimizedBestFitDecreasingParallel;
 
-impl PackingAlgorithm for OptimisedBestFitDecreasingParallel {
+impl PackingAlgorithm for OptimizedBestFitDecreasingParallel {
     fn pack(&self, sequences: Vec<Sequence>, capacity: usize) -> Result<Vec<Pack>> {
         let lengths: Vec<usize> = sequences.iter().map(|s| s.length).collect();
-        let bins = optimised_best_fit_decreasing_parallel_lengths(&lengths, capacity)?;
+        let bins = optimized_best_fit_decreasing_parallel_lengths(&lengths, capacity)?;
         Ok(bins_to_packs_from_indices(bins, &sequences, capacity))
     }
 
     fn name(&self) -> &'static str {
-        "OptimisedBestFitDecreasingParallel"
+        "OptimizedBestFitDecreasingParallel"
     }
 }
 
@@ -35,7 +35,7 @@ impl PackingAlgorithm for OptimisedBestFitDecreasingParallel {
 ///
 /// Adaptively selects thread count based on input size.
 /// Falls back to sequential OBFD for small inputs (N ≤ 20k).
-pub fn optimised_best_fit_decreasing_parallel_lengths(
+pub fn optimized_best_fit_decreasing_parallel_lengths(
     lengths: &[usize],
     capacity: usize,
 ) -> Result<Vec<Vec<usize>>> {
@@ -51,7 +51,7 @@ pub fn optimised_best_fit_decreasing_parallel_lengths(
     };
 
     if num_threads == 1 {
-        return optimised_best_fit_decreasing_lengths(lengths, capacity);
+        return optimized_best_fit_decreasing_lengths(lengths, capacity);
     }
 
     // Cyclical distribution: thread t gets indices [t, t+P, t+2P, ...]
@@ -90,7 +90,7 @@ pub fn optimised_best_fit_decreasing_parallel_lengths(
     // Sequential repack of leftovers.
     if !repack_indices.is_empty() {
         let repack_lengths: Vec<usize> = repack_indices.iter().map(|&i| lengths[i]).collect();
-        let repacked = optimised_best_fit_decreasing_lengths(&repack_lengths, capacity)?;
+        let repacked = optimized_best_fit_decreasing_lengths(&repack_lengths, capacity)?;
         // Map local indices back to original indices.
         for bin in repacked {
             let mapped: Vec<usize> = bin.iter().map(|&local| repack_indices[local]).collect();
@@ -113,7 +113,7 @@ fn obfd_worker(
 
     // Extract lengths for this worker's items.
     let worker_lengths: Vec<usize> = indices.iter().map(|&i| all_lengths[i]).collect();
-    let local_bins = optimised_best_fit_decreasing_lengths(&worker_lengths, capacity)?;
+    let local_bins = optimized_best_fit_decreasing_lengths(&worker_lengths, capacity)?;
 
     // Map local indices back to original indices.
     Ok(local_bins
@@ -157,7 +157,7 @@ mod tests {
 
     #[test]
     fn test_empty_input() {
-        let bins = optimised_best_fit_decreasing_parallel_lengths(&[], 10).unwrap();
+        let bins = optimized_best_fit_decreasing_parallel_lengths(&[], 10).unwrap();
         assert!(bins.is_empty());
     }
 
@@ -165,7 +165,7 @@ mod tests {
     fn test_small_input_delegates_to_obfd() {
         // With ≤20k items, should use 1 thread (same result as OBFD).
         let lengths = &[6, 4, 6, 4];
-        let bins = optimised_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 2);
         validate_bins(&bins, lengths, 10);
     }
@@ -173,14 +173,14 @@ mod tests {
     #[test]
     fn test_all_items_packed() {
         let lengths: Vec<usize> = (1..=100).collect();
-        let bins = optimised_best_fit_decreasing_parallel_lengths(&lengths, 200).unwrap();
+        let bins = optimized_best_fit_decreasing_parallel_lengths(&lengths, 200).unwrap();
         validate_bins(&bins, &lengths, 200);
     }
 
     #[test]
     fn test_all_same_size() {
         let lengths = &[5, 5, 5, 5];
-        let bins = optimised_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 2);
         validate_bins(&bins, lengths, 10);
     }
@@ -188,14 +188,14 @@ mod tests {
     #[test]
     fn test_exact_capacity_items() {
         let lengths = &[10, 10, 10];
-        let bins = optimised_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_parallel_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 3);
         validate_bins(&bins, lengths, 10);
     }
 
     #[test]
     fn test_error_propagated() {
-        let result = optimised_best_fit_decreasing_parallel_lengths(&[11], 10);
+        let result = optimized_best_fit_decreasing_parallel_lengths(&[11], 10);
         assert!(result.is_err());
     }
 
@@ -206,7 +206,7 @@ mod tests {
         use crate::validation::validate_solution;
 
         let lengths: Vec<usize> = (1..=50).map(|i| i * 2).collect();
-        let bins_items = optimised_best_fit_decreasing_parallel_lengths(&lengths, 100).unwrap();
+        let bins_items = optimized_best_fit_decreasing_parallel_lengths(&lengths, 100).unwrap();
 
         let bins: Vec<Bin> = bins_items
             .iter()
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn test_packing_algorithm_trait() {
-        let algo = OptimisedBestFitDecreasingParallel;
+        let algo = OptimizedBestFitDecreasingParallel;
         let sequences = vec![
             Sequence::new(0, 6),
             Sequence::new(1, 4),
@@ -250,8 +250,8 @@ mod tests {
     #[test]
     fn test_name() {
         assert_eq!(
-            OptimisedBestFitDecreasingParallel.name(),
-            "OptimisedBestFitDecreasingParallel"
+            OptimizedBestFitDecreasingParallel.name(),
+            "OptimizedBestFitDecreasingParallel"
         );
     }
 }

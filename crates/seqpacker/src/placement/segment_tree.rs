@@ -154,7 +154,7 @@ impl PlacementIndex for SegmentTreeIndex {
     }
 
     fn best_fit(&self, needed: usize) -> Option<usize> {
-        // Segment tree is not optimised for best-fit. Fall back to linear scan.
+        // Segment tree is not optimized for best-fit. Fall back to linear scan.
         // Use BTreeRemainingIndex for O(log B) for best-fit.
         self.remaining
             .iter()

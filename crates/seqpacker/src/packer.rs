@@ -128,10 +128,10 @@ impl Packer {
                 algorithms::FirstFitShuffle::new(seed).pack(sequences, capacity)?
             }
             PackStrategy::OptimizedBestFitDecreasing => {
-                algorithms::OptimisedBestFitDecreasing.pack(sequences, capacity)?
+                algorithms::OptimizedBestFitDecreasing.pack(sequences, capacity)?
             }
             PackStrategy::ParallelOptimizedBestFitDecreasing => {
-                algorithms::OptimisedBestFitDecreasingParallel.pack(sequences, capacity)?
+                algorithms::OptimizedBestFitDecreasingParallel.pack(sequences, capacity)?
             }
             PackStrategy::ModifiedFirstFitDecreasing => {
                 algorithms::ModifiedFirstFitDecreasing.pack(sequences, capacity)?

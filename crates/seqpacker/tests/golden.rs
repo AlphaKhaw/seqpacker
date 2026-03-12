@@ -51,8 +51,8 @@ fn all_deterministic_algorithms() -> Vec<Box<dyn PackingAlgorithm>> {
         Box::new(WorstFit),
         Box::new(FirstFitDecreasing),
         Box::new(BestFitDecreasing),
-        Box::new(OptimisedBestFitDecreasing),
-        Box::new(OptimisedBestFitDecreasingParallel),
+        Box::new(OptimizedBestFitDecreasing),
+        Box::new(OptimizedBestFitDecreasingParallel),
     ]
 }
 
@@ -228,7 +228,7 @@ fn test_obfd_matches_ffd_bin_count() {
         let ffd_packs = FirstFitDecreasing
             .pack(make_sequences(lens), capacity)
             .unwrap();
-        let obfd_packs = OptimisedBestFitDecreasing
+        let obfd_packs = OptimizedBestFitDecreasing
             .pack(make_sequences(lens), capacity)
             .unwrap();
         assert!(
@@ -246,10 +246,10 @@ fn test_obfd_matches_ffd_bin_count() {
 fn test_obfdp_matches_obfd_on_small_input() {
     // For small inputs (≤20k), OBFDP delegates to OBFD — same result.
     for &(capacity, lens) in GOLDEN_TESTS {
-        let obfd_packs = OptimisedBestFitDecreasing
+        let obfd_packs = OptimizedBestFitDecreasing
             .pack(make_sequences(lens), capacity)
             .unwrap();
-        let obfdp_packs = OptimisedBestFitDecreasingParallel
+        let obfdp_packs = OptimizedBestFitDecreasingParallel
             .pack(make_sequences(lens), capacity)
             .unwrap();
         assert_eq!(

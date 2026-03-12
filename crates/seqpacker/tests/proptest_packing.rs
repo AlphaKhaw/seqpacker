@@ -50,8 +50,8 @@ fn all_algorithms() -> Vec<Box<dyn PackingAlgorithm>> {
         Box::new(FirstFitDecreasing),
         Box::new(BestFitDecreasing),
         Box::new(FirstFitShuffle::new(42)),
-        Box::new(OptimisedBestFitDecreasing),
-        Box::new(OptimisedBestFitDecreasingParallel),
+        Box::new(OptimizedBestFitDecreasing),
+        Box::new(OptimizedBestFitDecreasingParallel),
     ]
 }
 

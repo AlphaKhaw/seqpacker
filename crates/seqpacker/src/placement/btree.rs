@@ -6,7 +6,7 @@ use super::PlacementIndex;
 
 /// BTreeMap keyed by remaining capacity, values are bin IDs.
 ///
-/// Optimised for `best_fit` and `worst_fit` queries via `range()`.
+/// Optimized for `best_fit` and `worst_fit` queries via `range()`.
 /// Also supports `first_fit` but as O(B) fallback (use `SegmentTreeIndex`
 /// for fast first-fit).
 #[derive(Clone, Debug, Default)]
@@ -60,7 +60,7 @@ impl PlacementIndex for BTreeRemainingIndex {
     }
 
     fn first_fit(&self, needed: usize) -> Option<usize> {
-        // BTree is not optimised for leftmost queries. Fall back to linear.
+        // BTree is not optimized for leftmost queries. Fall back to linear.
         self.remaining
             .iter()
             .enumerate()

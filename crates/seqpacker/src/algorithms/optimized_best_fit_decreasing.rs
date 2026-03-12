@@ -1,4 +1,4 @@
-//! OBFD (Optimised Best-Fit Decreasing) algorithm.
+//! OBFD (Optimized Best-Fit Decreasing) algorithm.
 //!
 //! LightBinPack's core algorithm. O(N log L) where N = number of sequences,
 //! L = max capacity. Achieves 98.76% efficiency (same as FFD) but ~150-200x
@@ -19,17 +19,17 @@ use super::counting_sort::counting_sort;
 use crate::placement::capacity_segment_tree::CapacitySegmentTree;
 
 /// OBFD algorithm — the recommended default for offline packing.
-pub struct OptimisedBestFitDecreasing;
+pub struct OptimizedBestFitDecreasing;
 
-impl PackingAlgorithm for OptimisedBestFitDecreasing {
+impl PackingAlgorithm for OptimizedBestFitDecreasing {
     fn pack(&self, sequences: Vec<Sequence>, capacity: usize) -> Result<Vec<Pack>> {
         let lengths: Vec<usize> = sequences.iter().map(|s| s.length).collect();
-        let bins = optimised_best_fit_decreasing_lengths(&lengths, capacity)?;
+        let bins = optimized_best_fit_decreasing_lengths(&lengths, capacity)?;
         Ok(bins_to_packs_from_indices(bins, &sequences, capacity))
     }
 
     fn name(&self) -> &'static str {
-        "OptimisedBestFitDecreasing"
+        "OptimizedBestFitDecreasing"
     }
 }
 
@@ -73,7 +73,7 @@ pub fn bins_to_packs_from_indices(
 /// # Errors
 ///
 /// Returns `PackError::SequenceTooLong` if any length exceeds capacity.
-pub fn optimised_best_fit_decreasing_lengths(
+pub fn optimized_best_fit_decreasing_lengths(
     lengths: &[usize],
     capacity: usize,
 ) -> Result<Vec<Vec<usize>>> {
@@ -210,13 +210,13 @@ mod tests {
 
     #[test]
     fn test_empty_input() {
-        let bins = optimised_best_fit_decreasing_lengths(&[], 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(&[], 10).unwrap();
         assert!(bins.is_empty());
     }
 
     #[test]
     fn test_single_item() {
-        let bins = optimised_best_fit_decreasing_lengths(&[5], 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(&[5], 10).unwrap();
         assert_eq!(bins.len(), 1);
         assert_eq!(bins[0], vec![0]);
     }
@@ -224,7 +224,7 @@ mod tests {
     #[test]
     fn test_exact_fit_single_bin() {
         let lengths = &[3, 3, 4];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 1);
         validate_bins(&bins, lengths, 10);
     }
@@ -233,7 +233,7 @@ mod tests {
     fn test_all_same_size_equal_capacity() {
         // 4 items of size 5, capacity 5 → 4 bins.
         let lengths = &[5, 5, 5, 5];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 5).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 5).unwrap();
         assert_eq!(bins.len(), 4);
         validate_bins(&bins, lengths, 5);
     }
@@ -242,7 +242,7 @@ mod tests {
     fn test_all_same_size_two_per_bin() {
         // 4 items of size 5, capacity 10 → 2 bins.
         let lengths = &[5, 5, 5, 5];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 2);
         validate_bins(&bins, lengths, 10);
     }
@@ -251,7 +251,7 @@ mod tests {
     fn test_decreasing_order_packs_well() {
         // Classic BFD example: should pack tightly.
         let lengths = &[7, 5, 5, 4, 3, 3, 2, 2, 1];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 10).unwrap();
         validate_bins(&bins, lengths, 10);
         // Total = 32, capacity 10 → optimal = ceil(32/10) = 4 bins.
         assert!(bins.len() <= 5, "expected ≤5 bins, got {}", bins.len());
@@ -264,7 +264,7 @@ mod tests {
         // 5 doesn't fit in bin0 (remaining=4 < 5) → new bin1, remaining=5
         // 4 fits in bin0 (remaining=4 == 4, tighter than bin1's 5)
         let lengths = &[6, 5, 4];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 10).unwrap();
         assert_eq!(bins.len(), 2);
         validate_bins(&bins, lengths, 10);
     }
@@ -273,7 +273,7 @@ mod tests {
 
     #[test]
     fn test_sequence_too_long() {
-        let err = optimised_best_fit_decreasing_lengths(&[11], 10).unwrap_err();
+        let err = optimized_best_fit_decreasing_lengths(&[11], 10).unwrap_err();
         assert!(matches!(
             err,
             PackError::SequenceTooLong {
@@ -285,7 +285,7 @@ mod tests {
 
     #[test]
     fn test_zero_length_rejected() {
-        let err = optimised_best_fit_decreasing_lengths(&[5, 0, 3], 10).unwrap_err();
+        let err = optimized_best_fit_decreasing_lengths(&[5, 0, 3], 10).unwrap_err();
         assert!(matches!(err, PackError::InvalidConfig { .. }));
     }
 
@@ -294,7 +294,7 @@ mod tests {
     #[test]
     fn test_all_items_placed() {
         let lengths: Vec<usize> = (1..=20).collect();
-        let bins = optimised_best_fit_decreasing_lengths(&lengths, 50).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(&lengths, 50).unwrap();
         validate_bins(&bins, &lengths, 50);
     }
 
@@ -302,7 +302,7 @@ mod tests {
     fn test_large_items_one_per_bin() {
         // Every item equals capacity → N bins.
         let lengths = &[100, 100, 100];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 100).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 100).unwrap();
         assert_eq!(bins.len(), 3);
         validate_bins(&bins, lengths, 100);
     }
@@ -310,7 +310,7 @@ mod tests {
     #[test]
     fn test_mixed_sizes() {
         let lengths = &[8, 7, 6, 5, 4, 3, 2, 1];
-        let bins = optimised_best_fit_decreasing_lengths(lengths, 10).unwrap();
+        let bins = optimized_best_fit_decreasing_lengths(lengths, 10).unwrap();
         validate_bins(&bins, lengths, 10);
         // Total = 36, capacity 10 → optimal = 4 bins.
         assert!(bins.len() <= 5);
@@ -320,7 +320,7 @@ mod tests {
 
     #[test]
     fn test_packing_algorithm_trait() {
-        let algo = OptimisedBestFitDecreasing;
+        let algo = OptimizedBestFitDecreasing;
         let sequences = vec![
             Sequence::new(0, 6),
             Sequence::new(1, 4),
@@ -336,8 +336,8 @@ mod tests {
     #[test]
     fn test_name() {
         assert_eq!(
-            OptimisedBestFitDecreasing.name(),
-            "OptimisedBestFitDecreasing"
+            OptimizedBestFitDecreasing.name(),
+            "OptimizedBestFitDecreasing"
         );
     }
 }
