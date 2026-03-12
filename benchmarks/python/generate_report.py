@@ -13,8 +13,8 @@ import pandas as pd
 
 from benchmarks.python.utils.logging import logger
 
-RESULTS_DIR = Path("benchmarks/results")
-CHARTS_DIR = RESULTS_DIR / "charts"
+RESULTS_DIR: Path = Path("benchmarks/results")
+CHARTS_DIR: Path = RESULTS_DIR / "charts"
 
 
 def load_results() -> tuple[pd.DataFrame, dict | None]:

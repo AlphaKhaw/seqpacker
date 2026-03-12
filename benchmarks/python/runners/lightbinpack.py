@@ -18,7 +18,7 @@ try:
 
     LIGHTBINPACK_AVAILABLE = True
     LIGHTBINPACK_STRATEGIES: dict[str, Callable] = {
-        "ffd": ffd,
+        "ffd": ffd,  # type: ignore[attr-defined]
         "bfd": bfd,
         "obfd": obfd,
         "obfdp": obfdp,
