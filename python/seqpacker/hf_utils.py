@@ -213,7 +213,7 @@ def pack_dataset(
 
     Returns:
         datasets.Dataset: Dataset with columns `input_ids`, `attention_mask`,
-            `labels`, and `position_ids`. Each row is one packed bin.
+                          `labels`, and `position_ids`. Each row is one packed bin.
     """
     lengths = [len(seq) for seq in token_ids]
     if not lengths:
