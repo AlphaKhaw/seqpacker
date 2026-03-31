@@ -44,7 +44,7 @@ nav:
       - Algorithms: user-guide/algorithms.md
       - Batch Packing: user-guide/batch-packing.md
       - Streaming: user-guide/streaming.md
-      - PyTorch Integration: user-guide/pytorch.md
+      - Training Integration: user-guide/training.md
       - NumPy Support: user-guide/numpy.md
   - API Reference: api.md
   - Performance: performance.md
