@@ -212,6 +212,42 @@ Flush all remaining open bins and return them as packs. After calling `finish()`
 
 ---
 
+## `hf_utils`
+
+Optional module for HuggingFace Trainer integration. Requires `datasets` to be installed.
+
+```python
+from seqpacker.hf_utils import pack_dataset, pack_dataset_from_result
+```
+
+See [Training Integration](user-guide/training.md#huggingface-trainer) for full documentation.
+
+### `pack_dataset`
+
+One-call convenience that packs token sequences and returns a `datasets.Dataset` with `input_ids`, `attention_mask`, `labels`, and `position_ids`.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `token_ids` | `Sequence[Sequence[int]]` | required | Token ID sequences to pack |
+| `capacity` | `int` | required | Maximum bin capacity in tokens |
+| `strategy` | `str` | `"obfd"` | Packing algorithm short name |
+| `seed` | `int \| None` | `None` | Random seed for shuffle-based algorithms |
+| `padding_value` | `int` | `0` | Value for padding positions in `input_ids` |
+| `label_padding_value` | `int` | `-100` | Value for masked label positions |
+
+### `pack_dataset_from_result`
+
+Converts a pre-computed `PackResult` into a `datasets.Dataset`. Use when you want to inspect metrics before building the dataset.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `result` | `PackResult` | required | Packing result from `pack_sequences` or `Packer.pack` |
+| `token_ids` | `Sequence[Sequence[int]]` | required | Token ID sequences indexed by original sequence ID |
+| `padding_value` | `int` | `0` | Value for padding positions in `input_ids` |
+| `label_padding_value` | `int` | `-100` | Value for masked label positions |
+
+---
+
 ## `torch_utils`
 
 Optional module for PyTorch integration. Requires `torch` to be installed.
@@ -220,7 +256,7 @@ Optional module for PyTorch integration. Requires `torch` to be installed.
 from seqpacker.torch_utils import PackedBatch, pack_result_to_tensors, packed_collate_fn
 ```
 
-See [PyTorch Integration](user-guide/pytorch.md) for full documentation.
+See [Training Integration](user-guide/training.md#pytorch-dataloader) for full documentation.
 
 ### `PackedBatch`
 

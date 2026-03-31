@@ -10,6 +10,7 @@ Training LLMs on variable-length sequences? Naive padding wastes **20-40% of GPU
 
 - **11 algorithms** — NF, FF, BF, WF, FFD, BFD, FFS, MFFD, OBFD, OBFDP, HK
 - **Streaming API** — bounded-space packing with incremental output
+- **HuggingFace integration** — one-call `pack_dataset` for SFTTrainer / TRL
 - **PyTorch integration** — GPU-ready tensors out of the box
 - **NumPy zero-copy** — pass arrays directly, no conversion overhead
 - **Cross-platform** — Linux, macOS, Windows; Python 3.9-3.13
