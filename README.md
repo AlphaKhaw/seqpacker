@@ -175,7 +175,7 @@ ds = pack_dataset(tokenized["input_ids"], capacity=2048)
 trainer = SFTTrainer(model=model, train_dataset=ds, ...)
 ```
 
-The returned dataset includes `input_ids`, `attention_mask`, `labels` (shifted with boundary masking), and `position_ids` (per-sequence reset).
+The returned dataset includes `input_ids`, `attention_mask`, `labels` (shifted with boundary masking), and `position_ids` (per-sequence reset). See [`examples/sft_trainer.py`](examples/sft_trainer.py) for a complete fine-tuning script.
 
 ### PyTorch DataLoader
 
@@ -206,6 +206,8 @@ result = pack_sequences(lengths, capacity=2048)
 batch = pack_result_to_tensors(result=result, token_ids=token_ids)
 # batch.input_ids, batch.cu_seqlens, batch.position_ids, batch.labels, batch.attention_mask
 ```
+
+See [`examples/pytorch_training.py`](examples/pytorch_training.py) for a complete training loop.
 
 ## NumPy Support
 

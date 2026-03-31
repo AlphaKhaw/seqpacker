@@ -38,7 +38,7 @@ trainer = SFTTrainer(
 trainer.train()
 ```
 
-`pack_dataset` handles the full pipeline: packing sequences into bins, concatenating token IDs, padding, and generating all metadata columns.
+`pack_dataset` handles the full pipeline: packing sequences into bins, concatenating token IDs, padding, and generating all metadata columns. See [examples/sft_trainer.py](https://github.com/AlphaKhaw/seqpacker/blob/main/examples/sft_trainer.py) for a complete fine-tuning script.
 
 ### Pre-computed packing
 
@@ -123,6 +123,8 @@ The collate function:
 1. Extracts lengths from each sample
 2. Packs them using the specified algorithm
 3. Returns a `PackedBatch` with all tensors ready for training
+
+See [examples/pytorch_training.py](https://github.com/AlphaKhaw/seqpacker/blob/main/examples/pytorch_training.py) for a complete training loop.
 
 ### Manual conversion
 
