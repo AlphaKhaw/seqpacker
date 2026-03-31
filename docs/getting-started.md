@@ -65,3 +65,9 @@ print(Packer.strategies())
 ```
 
 See the [Algorithms](user-guide/algorithms.md) page for a full comparison.
+
+## Next steps
+
+- [Training Integration](user-guide/training.md) -- use packed data with SFTTrainer or PyTorch
+- [examples/sft_trainer.py](https://github.com/AlphaKhaw/seqpacker/blob/main/examples/sft_trainer.py) -- complete SFTTrainer fine-tuning script
+- [examples/pytorch_training.py](https://github.com/AlphaKhaw/seqpacker/blob/main/examples/pytorch_training.py) -- custom PyTorch training loop

@@ -167,7 +167,8 @@ def pack_result_to_tensors(
     Args:
         result (PackResult): Packing result from ``pack_sequences`` or ``Packer.pack``.
         token_ids (Sequence[Sequence[int]]): Token ID sequences indexed by original
-            sequence ID. ``token_ids[i]`` corresponds to sequence ``i``.
+                                             sequence ID. ``token_ids[i]`` corresponds
+                                             to sequence ``i``.
         padding_value (int): Value for padding positions in ``input_ids`` (default: 0).
         label_padding_value (int): Value for masked label positions (default: -100).
         device (torch.device | str | None): Device for output tensors (default: CPU).
