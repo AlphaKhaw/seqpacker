@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2026-03-31
+
+### Added
+
+- **HuggingFace integration** (`seqpacker.hf_utils`) with `pack_dataset` and `pack_dataset_from_result` for building packed `datasets.Dataset` objects directly -- no tensor roundtrip needed
+- Training Integration docs page combining HF Trainer and PyTorch DataLoader workflows
+- Training examples: `examples/sft_trainer.py` (TRL SFTTrainer) and `examples/pytorch_training.py` (custom training loop)
+
 ## [0.1.2] - 2026-03-12
 
 ### Fixed
