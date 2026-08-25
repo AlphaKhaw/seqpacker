@@ -150,9 +150,9 @@ proptest! {
         let ffd_packs = FirstFitDecreasing.pack(make_sequences(&valid_lens), capacity)?;
 
         let total_len: usize = valid_lens.iter().sum();
-        let opt_lower = (total_len + capacity - 1) / capacity; // ceil(total / cap)
+        let opt_lower = total_len.div_ceil(capacity);
         // FFD ≤ 11/9 * OPT + 6/9, use integer arithmetic with margin
-        let ffd_upper = (11 * opt_lower + 6 + 8) / 9 + 1;
+        let ffd_upper = (11 * opt_lower + 6).div_ceil(9) + 1;
 
         prop_assert!(
             ffd_packs.len() <= ffd_upper,

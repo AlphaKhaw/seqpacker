@@ -59,8 +59,8 @@ mod tests {
         let buckets = counting_sort(lengths, 7);
 
         assert_eq!(buckets[7], vec![0, 1, 2]);
-        for i in 0..7 {
-            assert!(buckets[i].is_empty());
+        for bucket in buckets.iter().take(7) {
+            assert!(bucket.is_empty());
         }
     }
 

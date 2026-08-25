@@ -89,6 +89,7 @@ mod tests {
     use super::*;
     use crate::placement::{BTreeRemainingIndex, LinearScanIndex, SegmentTreeIndex};
     use crate::validation::validate_solution;
+    use std::cmp::Reverse;
 
     fn make_items(lens: &[usize]) -> Vec<Item> {
         lens.iter()
@@ -184,7 +185,7 @@ mod tests {
     fn test_sorted_descending_best_fit() {
         let items = make_items(&[3, 7, 5, 8, 4]);
         let mut sorted: Vec<Item> = items.clone();
-        sorted.sort_unstable_by(|a, b| b.len.cmp(&a.len));
+        sorted.sort_unstable_by_key(|a| Reverse(a.len));
 
         let mut index = BTreeRemainingIndex::new();
         let bins = greedy_pack(

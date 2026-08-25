@@ -67,7 +67,7 @@ mod tests {
             .enumerate()
             .map(|(id, &len)| Item { id, len })
             .collect();
-        itms.sort_unstable_by(|a, b| b.len.cmp(&a.len));
+        itms.sort_unstable_by_key(|a| Reverse(a.len));
         itms
     }
 

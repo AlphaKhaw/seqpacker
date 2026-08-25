@@ -162,7 +162,7 @@ mod tests {
 
     #[test]
     fn test_sequence_sort_descending() {
-        let mut seqs = vec![
+        let mut seqs = [
             Sequence::new(0, 30),
             Sequence::new(1, 10),
             Sequence::new(2, 20),
