@@ -27,7 +27,7 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
 
       - name: Lint Python
-        uses: astral-sh/ruff-action@v4
+        uses: astral-sh/ruff-action@v4.1.0
 
   # Verify MSRV (declared rust-version = "1.85")
   msrv:
