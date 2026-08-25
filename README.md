@@ -7,7 +7,9 @@
 <p align="center">
   <a href="https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml"><img src="https://github.com/AlphaKhaw/seqpacker/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://crates.io/crates/seqpacker"><img src="https://img.shields.io/crates/v/seqpacker" alt="Crates.io"></a>
+  <a href="https://crates.io/crates/seqpacker"><img src="https://img.shields.io/crates/d/seqpacker?label=crates.io%20downloads&amp;color=blue" alt="crates.io downloads (all-time)"></a>
   <a href="https://pypi.org/project/seqpacker/"><img src="https://img.shields.io/pypi/v/seqpacker" alt="PyPI"></a>
+  <a href="https://pypi.org/project/seqpacker/"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fsql-clickhouse.clickhouse.com%2F%3Fuser%3Ddemo%26default_format%3DJSON%26query%3DSELECT%2520sum%2528count%2529%2520AS%2520installs%2520FROM%2520pypi.pypi_downloads_per_day_by_version_by_installer_by_type%2520WHERE%2520project%253D%2527seqpacker%2527%2520AND%2520installer%2520IN%2520%2528%2527pip%2527%252C%2527uv%2527%252C%2527Nexus%2527%2529&amp;query=%24.data%5B0%5D.installs&amp;label=pypi%20installs&amp;color=blue" alt="PyPI installs via pip/uv/Nexus (all-time)"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
 </p>
 

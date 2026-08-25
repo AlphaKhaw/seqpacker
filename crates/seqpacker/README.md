@@ -6,6 +6,7 @@
 
 <p align="center">
   <a href="https://crates.io/crates/seqpacker"><img src="https://img.shields.io/crates/v/seqpacker" alt="Crates.io"></a>
+  <a href="https://crates.io/crates/seqpacker"><img src="https://img.shields.io/crates/d/seqpacker?label=crates.io%20downloads&amp;color=blue" alt="crates.io downloads (all-time)"></a>
   <a href="https://docs.rs/seqpacker"><img src="https://img.shields.io/docsrs/seqpacker" alt="docs.rs"></a>
   <a href="https://github.com/AlphaKhaw/seqpacker/blob/main/LICENSE"><img src="https://img.shields.io/crates/l/seqpacker" alt="License"></a>
 </p>
