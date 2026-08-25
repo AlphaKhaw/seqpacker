@@ -11,6 +11,7 @@ use crate::pack::{Bin, Pack, bins_to_packs};
 use crate::placement::{PlacementIndex, SegmentTreeIndex};
 use crate::sequence::{Item, Sequence};
 use crate::strategy::PackingAlgorithm;
+use std::cmp::Reverse;
 
 /// Size class for MFFD classification.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -61,7 +62,7 @@ impl PackingAlgorithm for ModifiedFirstFitDecreasing {
         }
 
         // Sort all items descending by length.
-        items.sort_unstable_by(|a, b| b.len.cmp(&a.len));
+        items.sort_unstable_by_key(|a| Reverse(a.len));
 
         // Classify items into size classes.
         let mut large: Vec<Item> = Vec::new();

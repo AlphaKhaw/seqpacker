@@ -6,6 +6,7 @@ use crate::pack::{Pack, bins_to_packs};
 use crate::placement::{BTreeRemainingIndex, PlacementIndex};
 use crate::sequence::{Item, Sequence};
 use crate::strategy::PackingAlgorithm;
+use std::cmp::Reverse;
 
 /// Best Fit Decreasing algorithm implementation.
 pub struct BestFitDecreasing;
@@ -17,7 +18,7 @@ impl PackingAlgorithm for BestFitDecreasing {
         // (which may own Vec<u32> token data). Items keep their original IDs,
         // so bins_to_packs can index into the unchanged sequences array.
         let mut items: Vec<Item> = sequences.iter().map(|s| s.to_item()).collect();
-        items.sort_unstable_by(|a, b| b.len.cmp(&a.len));
+        items.sort_unstable_by_key(|a| Reverse(a.len));
 
         let mut index = BTreeRemainingIndex::new();
         let bins = greedy_pack(
